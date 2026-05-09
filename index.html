@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mubarak Asaad Alanazi — Cybersecurity</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,400;0,700;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0a0f1e;
+    --navy-mid: #111827;
+    --navy-card: #141c2e;
+    --accent: #00d4aa;
+    --accent-dim: rgba(0,212,170,0.12);
+    --accent-dim2: rgba(0,212,170,0.06);
+    --text-primary: #e8eaf0;
+    --text-secondary: #8892a4;
+    --text-muted: #4a5568;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(0,212,170,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text-primary);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid overlay for atmosphere */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    z-index: 1;
+  }
+
+  .hero-content { max-width: 680px; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 2rem;
+    padding: 6px 14px;
+    border: 1px solid var(--border-accent);
+    border-radius: 2px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: var(--accent);
+    color: var(--navy);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--text-primary);
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  /* ─── SECTIONS ─── */
+  section {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 3rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    color: var(--text-primary);
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--text-secondary);
+  }
+
+  .about-text strong { color: var(--text-primary); font-weight: 400; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .stat-box {
+    background: var(--navy-card);
+    padding: 2rem;
+  }
+
+  .stat-num {
+    font-family: 'Fraunces', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .skill-card {
+    background: var(--navy-card);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .skill-card:hover { background: var(--accent-dim2); }
+  .skill-card:hover::before { transform: scaleX(1); }
+
+  .skill-icon {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .skill-name {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .skill-desc {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ─── EXPERIENCE / EDUCATION ─── */
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .timeline-item:first-child { padding-top: 0; }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    padding-top: 4px;
+  }
+
+  .timeline-body {}
+
+  .timeline-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .timeline-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .timeline-desc {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* ─── INTERESTS / CERTS ─── */
+  .tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    padding: 8px 16px;
+    border: 1px solid var(--border-accent);
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    background: var(--accent-dim);
+    transition: background 0.2s;
+  }
+
+  .tag:hover { background: rgba(0,212,170,0.2); }
+
+  /* ─── CONTACT ─── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .contact-info {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    background: var(--navy-card);
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .contact-link:hover { background: var(--accent-dim); color: var(--accent); }
+
+  .contact-link span { font-size: 16px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    footer { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MAA.SEC</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content fade-in">
+    <div class="hero-tag">Available for SOC Roles</div>
+    <h1>Mubarak<br/><em>Alanazi</em></h1>
+    <p class="hero-sub">
+      Bachelor of Cybersecurity &nbsp;·&nbsp; SOC Analyst Aspirant<br/>
+      Defending networks. Detecting threats. Protecting people.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Get in touch →</a>
+      <a href="#skills" class="btn-outline">View my skills</a>
+      <a href="Mubarak_Alanazi_CV.docx" download class="btn-outline">⬇ Download CV</a>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-in">
+    <p class="section-label">01 — About</p>
+    <h2 class="section-title">Who I am</h2>
+  </div>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>I'm <strong>Mubarak Asaad Alanazi</strong>, a cybersecurity graduate with a deep passion for Security Operations and threat analysis. My focus lies in understanding how attackers think — so defenders can stay one step ahead.</p>
+      <br/>
+      <p>I'm drawn to the SOC environment: the real-time monitoring, incident response, and the satisfaction of catching a threat before it causes harm. Every alert is a puzzle, and I thrive on solving them.</p>
+      <br/>
+      <p>My goal is to contribute to a team that takes security seriously — and grow into a skilled analyst capable of handling the most complex incidents.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box">
+        <div class="stat-num">B.Sc.</div>
+        <div class="stat-label">Cybersecurity Degree</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">SOC</div>
+        <div class="stat-label">Career Focus</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">L1–3</div>
+        <div class="stat-label">Analyst Readiness</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Defender Mindset</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="fade-in">
+    <p class="section-label">02 — Skills</p>
+    <h2 class="section-title">Core competencies</h2>
+  </div>
+  <div class="skills-grid fade-in">
+    <div class="skill-card">
+      <div class="skill-icon">🛡️</div>
+      <div class="skill-name">SIEM & Log Analysis</div>
+      <div class="skill-desc">Monitoring, correlating, and analyzing security events using SIEM platforms to detect anomalous behavior and threats.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-name">Threat Detection</div>
+      <div class="skill-desc">Identifying indicators of compromise (IOCs), TTPs, and attack patterns using frameworks like MITRE ATT&CK.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🌐</div>
+      <div class="skill-name">Network Security</div>
+      <div class="skill-desc">Understanding of TCP/IP, firewalls, IDS/IPS, VPNs, and traffic analysis tools like Wireshark.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">🚨</div>
+      <div class="skill-name">Incident Response</div>
+      <div class="skill-desc">Triaging security incidents, escalating appropriately, and following structured IR playbooks to contain and remediate threats.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">💻</div>
+      <div class="skill-name">Vulnerability Assessment</div>
+      <div class="skill-desc">Identifying system weaknesses using scanning tools and risk prioritization techniques to reduce the attack surface.</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-icon">📋</div>
+      <div class="skill-name">Security Fundamentals</div>
+      <div class="skill-desc">Strong grounding in cryptography, access control, risk management, and security policies & compliance frameworks.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="fade-in">
+    <p class="section-label">03 — Education & Interests</p>
+    <h2 class="section-title">Background</h2>
+  </div>
+
+  <div class="timeline fade-in">
+    <div class="timeline-item">
+      <div class="timeline-date">2020 – 2024</div>
+      <div class="timeline-body">
+        <div class="timeline-title">Bachelor of Science — Cybersecurity</div>
+        <div class="timeline-sub">Saudi Arabia</div>
+        <div class="timeline-desc">Completed a comprehensive undergraduate program covering network security, ethical hacking, digital forensics, cryptography, and security operations. Developed strong analytical skills and hands-on experience with security tools and simulated environments.</div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">Ongoing</div>
+      <div class="timeline-body">
+        <div class="timeline-title">SOC Analyst Training & Self-Study</div>
+        <div class="timeline-sub">Platforms: TryHackMe, Blue Team Labs, etc.</div>
+        <div class="timeline-desc">Actively building hands-on SOC skills through labs and capture-the-flag challenges focused on threat hunting, SIEM usage, and incident response workflows.</div>
+      </div>
+    </div>
+  </div>
+
+  <br/><br/>
+
+  <p class="section-label fade-in">Areas of Interest</p>
+  <div class="tags-grid fade-in">
+    <span class="tag">SOC Operations</span>
+    <span class="tag">Threat Intelligence</span>
+    <span class="tag">MITRE ATT&CK</span>
+    <span class="tag">Digital Forensics</span>
+    <span class="tag">Malware Analysis</span>
+    <span class="tag">Blue Teaming</span>
+    <span class="tag">Incident Response</span>
+    <span class="tag">Network Monitoring</span>
+    <span class="tag">Cyber Threat Hunting</span>
+    <span class="tag">OSINT</span>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-in">
+    <p class="section-label">04 — Contact</p>
+    <h2 class="section-title">Let's connect</h2>
+  </div>
+  <div class="contact-grid fade-in">
+    <div class="contact-info">
+      I'm actively looking for SOC analyst opportunities. If you're hiring or know of openings — I'd love to hear from you. Reach out through any of the channels listed, and I'll respond promptly.
+    </div>
+    <div class="contact-links">
+      <a href="mailto:MubarakAlanazi4@gmail.com" class="contact-link">
+        <span>✉</span>
+        MubarakAlanazi4@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/mubarak-alanazi-8175a429a" target="_blank" class="contact-link">
+        <span>in</span>
+        linkedin.com/in/mubarak-alanazi →
+      </a>
+      <a href="https://github.com/rookq23" target="_blank" class="contact-link">
+        <span>⌥</span>
+        github.com/rookq23 →
+      </a>
+      <a href="Mubarak_Alanazi_CV.docx" download class="contact-link">
+        <span>⬇</span>
+        Download CV (.docx)
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2024 Mubarak Asaad Alanazi &nbsp;·&nbsp; Cybersecurity Professional &nbsp;·&nbsp; Saudi Arabia
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  document.querySelector('.hero .fade-in').classList.add('visible');
+</script>
+
+</body>
+</html>
